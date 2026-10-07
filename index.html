@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Song player:Ya Ana</title>
+    <!-- ربط ملف التصميم -->
+    <link rel="stylesheet" href="style.css">
+    <!-- ربط أيقونات FontAwesome للأزرار -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- خلفية الصورة الضبابية -->
+    <div class="bg-image"></div>
+    <div class="overlay"></div>
+
+    <!-- بطاقة مشغل الأغاني -->
+    <div class="player-card">
+        <!-- صورة الألبوم -->
+        <div class="img-area">
+            <!-- ضع رابط صورتك هنا أو مسارها المحلي -->
+            <img src="12.jpg" alt="صورة الأغنية">
+        </div>
+
+        <!-- تفاصيل الأغنية -->
+        <div class="song-details">
+            <h2 class="name">Ya Ana</h2>
+            <p class="artist">Meaning of the name: Fairouz</p>
+        </div>
+
+        <!-- شريط التقدم -->
+        <div class="progress-area">
+            <div class="progress-bar">
+                <span class="progress"></span>
+            </div>
+            <div class="song-timer">
+                <span class="current-time">0:00</span>
+                <span class="max-duration">0:00</span>
+            </div>
+        </div>
+
+        <!-- أزرار التحكم -->
+        <div class="controls">
+            <div class="play-pause">
+                <i id="play" class="fas fa-play"></i>
+            </div>
+        </div>
+
+        <!-- عنصر الصوت: ضع رابط أو مسار ملف الأغنية الخاص بك هنا داخل خاصية src -->
+        <audio id="main-audio" src="Ya Ana(M4A_128K).m4a"></audio>
+    </div>
+
+    <!-- كود JavaScript للتحكم بالتشغيل وتحديث الشريط -->
+    <script>
+        const playPauseBtn = document.querySelector(".play-pause");
+        const mainAudio = document.querySelector("#main-audio");
+        const playBtnIcon = document.querySelector("#play");
+        const progressBar = document.querySelector(".progress-bar");
+        const progressArea = document.querySelector(".progress-area");
+        const musicCurrentTime = document.querySelector(".current-time");
+        const musicDuration = document.querySelector(".max-duration");
+
+        // تشغيل وإيقاف الأغنية
+        playPauseBtn.addEventListener("click", () => {
+            const isMusicPlay = playPauseBtn.classList.contains("paused");
+            if (isMusicPlay) {
+                mainAudio.pause();
+                playPauseBtn.classList.remove("paused");
+                playBtnIcon.classList.replace("fa-pause", "fa-play");
+            } else {
+                mainAudio.play();
+                playPauseBtn.classList.add("paused");
+                playBtnIcon.classList.replace("fa-play", "fa-pause");
+            }
+        });
+
+        // تحديث شريط التقدم مع الوقت
+        mainAudio.addEventListener("timeupdate", (e) => {
+            const currentTime = e.target.currentTime;
+            const duration = e.target.duration;
+            let progressWidth = (currentTime / duration) * 100;
+            progressBar.style.width = `${progressWidth}%`;
+
+            // حساب الوقت الحالي
+            let currentMin = Math.floor(currentTime / 60);
+            let currentSec = Math.floor(currentTime % 60);
+            if (currentSec < 10) currentSec = `0${currentSec}`;
+            musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
+        });
+
+        // حساب المدة الكلية للأغنية عند تحميلها
+        mainAudio.addEventListener("loadeddata", () => {
+            let audioDuration = mainAudio.duration;
+            let totalMin = Math.floor(audioDuration / 60);
+            let totalSec = Math.floor(audioDuration % 60);
+            if (totalSec < 10) totalSec = `0${totalSec}`;
+            musicDuration.innerText = `${totalMin}:${totalSec}`;
+        });
+
+        // تقديم أو تأخير الأغنية عند الضغط على الشريط
+        progressArea.addEventListener("click", (e) => {
+            let progressWidth = progressArea.clientWidth;
+            let clickedOffsetX = e.offsetX;
+            let songDuration = mainAudio.duration;
+            mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+            mainAudio.play();
+            playPauseBtn.classList.add("paused");
+            playBtnIcon.classList.replace("fa-play", "fa-pause");
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Cairo', sans-serif;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+}
+
+/* تنسيق الصورة في الخلفية مع تأثير ضبابي */
+.bg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* ضع رابط نفس صورة الألبوم هنا لتظهر في الخلفية */
+    background: url('12.jpg') no-repeat center center;
+    background-size: cover;
+    filter: blur(20px);
+    z-index: -2;
+}
+
+/* طبقة تعتيم شفافة فوق الخلفية لزيادة وضوح البطاقة */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: -1;
+}
+
+/* تصميم بطاقة المشغل الشفافة */
+.player-card {
+    width: 350px;
+    padding: 25px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(216, 255, 0, 0.2);
+    border-radius: 20px;
+    box-shadow: 0px 15px 35px rgba(252, 37, 37, 1);
+    text-align: center;
+}
+
+/* صورة الألبوم المصغرة داخل البطاقة */
+.img-area {
+    width: 100%;
+    height: 230px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.img-area img {
+    width: 100%;
+    height: 100%;
+    object-file: cover;
+    object-fit: cover;
+}
+
+/* تفاصيل الأغنية */
+.song-details {
+    margin: 20px 0;
+}
+
+.song-details .name {
+    font-size: 20px;
+    color: #fff;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.song-details .artist {
+    font-size: 14px;
+    color: #ddd;
+    margin-top: 5px;
+}
+
+/* شريط التقدم */
+.progress-area {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.progress-bar {
+    height: inherit;
+    width: 0%;
+    background: #fff;
+    border-radius: inherit;
+    position: relative;
+}
+
+.song-timer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #eee;
+    margin-top: 6px;
+}
+
+/* أزرار التحكم */
+.controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.controls .play-pause {
+    height: 60px;
+    width: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.controls .play-pause:hover {
+    transform: scale(1.05);
+}
+
+.controls .play-pause i {
+    color: #333;
+    font-size: 22px;
+}
